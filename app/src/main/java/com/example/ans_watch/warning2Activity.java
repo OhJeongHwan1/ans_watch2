@@ -2,6 +2,7 @@ package com.example.ans_watch;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,7 +27,7 @@ public class warning2Activity  extends  Activity{
                 startActivity(intent);
                 finish();
             }
-        }, 1200);
+        }, 2000);
 
         Button developer_info_btn = (Button) findViewById(R.id.toSafe2);
         developer_info_btn.setOnClickListener(new View.OnClickListener(){
@@ -39,7 +40,8 @@ public class warning2Activity  extends  Activity{
         boolean a = myApp.getIsChecked();
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         if(a == true){
-            vibrator.vibrate(VibrationEffect.createOneShot(1500, 255));
+            vibrator.vibrate(VibrationEffect.createOneShot(1800, 255));
+            Log.d("read", "진동 울림");
         }
     }
     protected void onDestroy() {

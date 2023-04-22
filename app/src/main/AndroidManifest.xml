@@ -4,6 +4,9 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-feature android:name="android.hardware.type.watch" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BIND_LISTENER_SERVICE" />
 
     <application
         android:name=".MyApplication"
@@ -39,6 +42,16 @@
         <activity android:name=".safeActivity"/>
         <activity android:name=".warningActivity"/>
         <activity android:name=".warning2Activity"/>
+
+        <service android:name=".MyWearableListenerService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+                <data android:scheme="wear" android:host="*" android:pathPrefix="/message" />
+            </intent-filter>
+        </service>
+
 
     </application>
 

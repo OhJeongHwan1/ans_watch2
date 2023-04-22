@@ -10,11 +10,14 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.content.Intent;
+
+import com.google.android.gms.wearable.DataClient;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class safeActivity  extends  Activity{
-
+    private DataClient mDataClient;
     TextView timeDate;
     long StartTime = 0L;
     long MillisecondTime = 0L;

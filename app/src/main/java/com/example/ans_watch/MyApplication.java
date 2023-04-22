@@ -13,4 +13,10 @@ public class MyApplication extends Application {
     public void setMyData(boolean isChecked) {
         this.isCheck = isChecked;
     }
+
+    private String st = "no";
+
+    public String getSt() {return st;}
+
+    public void setSt(String st){ this.st = st;}
 }
