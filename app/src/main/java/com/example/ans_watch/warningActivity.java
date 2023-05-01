@@ -29,7 +29,7 @@ public class warningActivity  extends  Activity{
                 startActivity(intent);
                 finish();
             }
-        }, 2000);
+        }, 3000);
 
         Button developer_info_btn = (Button) findViewById(R.id.toSafe1);
         developer_info_btn.setOnClickListener(new View.OnClickListener(){
@@ -42,7 +42,7 @@ public class warningActivity  extends  Activity{
         boolean a = myApp.getIsChecked();
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         if(a == true){
-            vibrator.vibrate(VibrationEffect.createOneShot(1800, 255));
+            vibrator.vibrate(VibrationEffect.createOneShot(2700, 255));
             Log.d("read", "진동 울림");
         }
     }

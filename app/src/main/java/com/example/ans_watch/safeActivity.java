@@ -3,6 +3,7 @@ package com.example.ans_watch;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
@@ -11,10 +12,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.content.Intent;
 
+import androidx.annotation.Nullable;
+
 import com.google.android.gms.wearable.DataClient;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class safeActivity  extends  Activity{
     private DataClient mDataClient;
@@ -61,11 +65,14 @@ public class safeActivity  extends  Activity{
         handler.postDelayed(runnable, 1000);
     }
     private String getTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH : mm : ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+0"));
         long now = SystemClock.uptimeMillis() - startTime;
         Date date = new Date(now);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH : mm : ss");
         String getTime = dateFormat.format(date);
-
         return getTime;
+    }
+    public void onCreate(){
+
     }
 }
