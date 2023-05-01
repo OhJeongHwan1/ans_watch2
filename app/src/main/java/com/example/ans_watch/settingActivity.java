@@ -48,11 +48,9 @@ public class settingActivity extends Activity{
                 if (isChecked) {
                     switch1.setText("진동 ON  ");
                     myApp.setMyData(true);
-                    Toast.makeText(settingActivity.this, "진동 on", Toast.LENGTH_SHORT).show();
                 } else {
                     switch1.setText("진동 OFF");
                     myApp.setMyData(false);
-                    Toast.makeText(settingActivity.this, "진동 off", Toast.LENGTH_SHORT).show();
                 }
             }
         });

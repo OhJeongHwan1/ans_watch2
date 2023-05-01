@@ -4,7 +4,7 @@ import android.app.Application;
 
 public class MyApplication extends Application {
 
-    private boolean isCheck = false;
+    private boolean isCheck = true;
 
     public boolean getIsChecked() {
         return isCheck;

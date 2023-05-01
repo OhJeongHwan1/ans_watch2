@@ -48,7 +48,10 @@
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
                 <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
-                <data android:scheme="wear" android:host="*" android:pathPrefix="/message" />
+                <data
+                    android:host="*"
+                    android:path="/data"
+                    android:scheme="wear" />
             </intent-filter>
         </service>
 
