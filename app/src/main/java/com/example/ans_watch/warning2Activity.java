@@ -1,9 +1,13 @@
 package com.example.ans_watch;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.content.Intent;
@@ -12,12 +16,29 @@ import android.annotation.*;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 public class warning2Activity  extends  Activity{
     private Handler handler;
     private Vibrator vibrator;
+
+    private BroadcastReceiver dataReceiver;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.state_warning2);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        dataReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String data = intent.getStringExtra(MyWearableListenerService.EXTRA_DATA);
+                // 데이터를 처리하세요
+                Log.d("nodriveActivity", "Data: " + data);
+                if ("back".equals(data)) {
+                    onBackPressed();
+                }
+            }
+        };
 
         handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -48,5 +69,16 @@ public class warning2Activity  extends  Activity{
         super.onDestroy();
         handler.removeCallbacksAndMessages(null);
         vibrator.cancel();
+    }
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                dataReceiver, new IntentFilter(MyWearableListenerService.ACTION_MESSAGE_RECEIVED));
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(dataReceiver);
+        super.onPause();
     }
 }

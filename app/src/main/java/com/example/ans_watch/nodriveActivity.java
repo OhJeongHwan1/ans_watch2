@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.content.Intent;
 import android.view.View;
@@ -27,14 +28,19 @@ public class nodriveActivity  extends  Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.state_nodrive);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         dataReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String data = intent.getStringExtra(MyWearableListenerService.EXTRA_DATA);
                 // 데이터를 처리하세요
                 Log.d("nodriveActivity", "Data: " + data);
-                onBackPressed();
+                Intent next;
+                if ("start".equals(data)) {
+                    // 경고 액티비티를 실행
+                    next = new Intent(getApplicationContext(), safeActivity.class);
+                    startActivity(next);
+                }
             }
         };
 
@@ -63,7 +69,7 @@ public class nodriveActivity  extends  Activity{
     protected void onResume() {
         super.onResume();
         LocalBroadcastManager.getInstance(this).registerReceiver(
-                dataReceiver, new IntentFilter(MyWearableListenerService.ACTION_DATA_RECEIVED));
+                dataReceiver, new IntentFilter(MyWearableListenerService.ACTION_MESSAGE_RECEIVED));
     }
 
     @Override

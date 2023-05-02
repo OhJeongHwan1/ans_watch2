@@ -18,7 +18,7 @@ public class MyWearableListenerService extends WearableListenerService {
 
     private static final String TAG = "from Android";
     private static final String DATA_PATH = "/data";
-    public static final String ACTION_DATA_RECEIVED = "com.example.ans_watch.DATA_RECEIVED";
+    public static final String ACTION_MESSAGE_RECEIVED = "com.example.ans_watch.MESSAGE_RECEIVED";
     public static final String EXTRA_DATA = "extra_data";
 
     public MyWearableListenerService() {
@@ -26,19 +26,16 @@ public class MyWearableListenerService extends WearableListenerService {
     }
 
     @Override
-    public void onDataChanged(DataEventBuffer dataEvents) {
-        Log.d(TAG, "데이터가 바뀌었다!!");
+    public void onMessageReceived(MessageEvent messageEvent) {
+        Log.d(TAG, "메시지 받았다!!");
 
-        for (DataEvent dataEvent : dataEvents) {
-            if (dataEvent.getType() == DataEvent.TYPE_CHANGED && dataEvent.getDataItem().getUri().getPath().equals(DATA_PATH)) {
-                DataMap dataMap = DataMapItem.fromDataItem(dataEvent.getDataItem()).getDataMap();
-                String message = dataMap.getString("message");
-                Log.d("수신 성공!!", "받은 데이터는" + message);
+        if (messageEvent.getPath().equals(DATA_PATH)) {
+            String message = new String(messageEvent.getData(), StandardCharsets.UTF_8);
+            Log.d("수신 성공!!", "받은 데이터는 " + message);
 
-                Intent localIntent = new Intent(ACTION_DATA_RECEIVED);
-                localIntent.putExtra(EXTRA_DATA, message);
-                LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
-            }
+            Intent localIntent = new Intent(ACTION_MESSAGE_RECEIVED);
+            localIntent.putExtra(EXTRA_DATA, message);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
         }
     }
 }
